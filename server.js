@@ -6,16 +6,11 @@ const compression = require("compression");
 const session = require("express-session");
 const LoginWithTwitter = require("login-with-twitter");
 const Twit = require("twit");
+const cookieParser = require("cookie-parser"); // parse cookie header
 
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
-
-const tw = new LoginWithTwitter({
-  consumerKey: process.env.API_KEY,
-  consumerSecret: process.env.API_SECRET_KEY,
-  callbackUrl: "https://tweeker-twitter.herokuapp.com/api/sign",
-});
 
 const app = express();
 
@@ -31,20 +26,45 @@ app.use(
     cookie: { maxAge: 3600000 },
   })
 );
+app.use(cookieParser());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 
+let redirect_URL;
+let tw;
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/build")));
-
+  tw = new LoginWithTwitter({
+    consumerKey: process.env.API_KEY,
+    consumerSecret: process.env.API_SECRET_KEY,
+    callbackUrl: "https://tweeker-twitter.herokuapp.com/api/sign",
+  });
+  redirect_URL = "https://tweeker-twitter.herokuapp.com/";
   // app.get("*", function (req, res) {
   //   res.sendFile(path.join(__dirname, "client/build", "index.html"));
   // });
   // if (process.env.NODE_ENV === 'production') {
   //   app.use(express.static('client/build'));
   // }
+} else {
+  tw = new LoginWithTwitter({
+    consumerKey: process.env.API_KEY,
+    consumerSecret: process.env.API_SECRET_KEY,
+    callbackUrl: "http://localhost:5000/api/sign",
+  });
+
+  redirect_URL = "http://localhost:3000/";
 }
+
+// app.use(
+//   cors({
+//     origin: redirect_URL, // allow to server to accept request from different origin
+//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//     credentials: true, // allow session cookie from browser to pass through
+//   })
+// );
+app.use(cors());
 
 app.get("/service-worker.js", (req, res) => {
   res.sendFile(path.resolve(__dirname, "..", "build", "service-worker.js"));
@@ -53,11 +73,8 @@ app.get("/service-worker.js", (req, res) => {
 let User = null;
 
 app.get("/api/auth", (req, res) => {
-  // console.log(req.session);
-  // res.send({ error: "Not Authenticated" });
-  //  console.log(req.session);
-  if (req.session.user || User) {
-    res.send({ User, auth: true });
+  if (req.session.user) {
+    res.send({ User: req.session.user, auth: true });
   } else {
     res.send({ auth: false });
   }
@@ -101,7 +118,7 @@ app.get("/api/sign", (req, res) => {
     User = user;
     // console.log(req.session);
     // res.send({user});
-    res.redirect("https://tweeker-twitter.herokuapp.com/");
+    res.redirect(redirect_URL);
   });
 });
 
@@ -165,7 +182,7 @@ app.get("/api/home_timeline", authCheck, (req, res) => {
 });
 
 app.get("/api/logout", authCheck, (req, res) => {
-  User = null;
+  req.session.user = null;
   res.send({ auth: false });
 });
 

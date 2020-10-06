@@ -2,11 +2,7 @@
   "name": "twitter-post-links",
   "version": "0.1.0",
   "private": true,
-  "proxy": {
-    "/api": {
-      "target": "http://localhost:5000"
-    }
-  },
+  "proxy": "http://localhost:5000/",
   "dependencies": {
     "@chakra-ui/core": "^0.8.0",
     "@emotion/core": "^10.0.35",
