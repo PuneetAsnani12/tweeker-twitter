@@ -101,7 +101,7 @@ app.get("/api/sign", (req, res) => {
     User = user;
     // console.log(req.session);
     // res.send({user});
-    res.redirect("https://tweeker.netlify.app/");
+    res.redirect("https://tweeker-twitter.herokuapp.com/");
   });
 });
 
