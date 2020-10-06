@@ -14,7 +14,7 @@ if (process.env.NODE_ENV != "production") {
 const tw = new LoginWithTwitter({
   consumerKey: process.env.API_KEY,
   consumerSecret: process.env.API_SECRET_KEY,
-  callbackUrl: "https://tweeker.netlify.app/sign",
+  callbackUrl: "https://tweeker-twitter.herokuapp.com/api/sign",
 });
 
 const app = express();
