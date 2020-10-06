@@ -32,11 +32,11 @@ class Homepage extends React.Component {
   };
 
   componentDidMount() {
-    axios.get("/auth").then((res) => {
+    axios.get("/api/auth").then((res) => {
       if (res.data.auth && !this.state.user) {
         this.setState({ user: res.data.User });
         axios
-          .get("/home_timeline")
+          .get("/api/home_timeline")
           .then((res) => {
             this.setState({ data: res.data.data });
             this.setState({ topdomains: res.data.topDomains });
@@ -54,12 +54,12 @@ class Homepage extends React.Component {
   }
 
   handlelogin() {
-    window.open("/login", "_self");
+    window.open("/api/login", "_self");
   }
 
   handlelogout = () => {
     this.setState({ user: null, data: [], topdomains: {}, mostShares: {} });
-    axios.get("/logout");
+    axios.get("/api/logout");
   };
 
   renderTweets() {

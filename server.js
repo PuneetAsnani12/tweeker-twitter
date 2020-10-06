@@ -49,7 +49,7 @@ app.get("/service-worker.js", (req, res) => {
 
 let User = null;
 
-app.get("/auth", (req, res) => {
+app.get("/api/auth", (req, res) => {
   // console.log(req.session);
   // res.send({ error: "Not Authenticated" });
   //  console.log(req.session);
@@ -60,7 +60,7 @@ app.get("/auth", (req, res) => {
   }
 });
 
-app.get("/login", (req, res) => {
+app.get("/api/login", (req, res) => {
   tw.login((err, tokenSecret, url) => {
     if (err) {
       // Handle the error your way
@@ -75,7 +75,7 @@ app.get("/login", (req, res) => {
   });
 });
 
-app.get("/sign", (req, res) => {
+app.get("/api/sign", (req, res) => {
   let params = {
     oauth_token: req.query.oauth_token,
     oauth_verifier: req.query.oauth_verifier,
@@ -113,7 +113,7 @@ const authCheck = (req, res, next) => {
   }
 };
 
-app.get("/home_timeline", authCheck, (req, res) => {
+app.get("/api/home_timeline", authCheck, (req, res) => {
   T = User.T;
   let Tweets = [];
   let topDomains = {};
@@ -161,7 +161,7 @@ app.get("/home_timeline", authCheck, (req, res) => {
   });
 });
 
-app.get("/logout", authCheck, (req, res) => {
+app.get("/api/logout", authCheck, (req, res) => {
   User = null;
   res.send({ auth: false });
 });
