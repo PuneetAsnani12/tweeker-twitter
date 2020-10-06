@@ -123,7 +123,7 @@ app.get("/api/sign", (req, res) => {
 });
 
 const authCheck = (req, res, next) => {
-  if (!User) {
+  if (!req.session.user) {
     res.status(401).json({
       authenticated: false,
       message: "user has not been authenticated",

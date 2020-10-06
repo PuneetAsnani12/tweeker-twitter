@@ -29,9 +29,16 @@ class Homepage extends React.Component {
     data: [],
     topdomains: {},
     mostShares: {},
+    src: null,
   };
 
   componentDidMount() {
+    const src = Background;
+    const imageLoader = new Image();
+    imageLoader.src = src;
+    imageLoader.onload = () => {
+      this.setState({ src });
+    };
     axios.get("/api/auth").then((res) => {
       if (res.data.auth && !this.state.user) {
         this.setState({ user: res.data.User });
@@ -112,6 +119,13 @@ class Homepage extends React.Component {
       );
     });
   }
+  renderImage() {
+    if (this.state.src) {
+      document.getElementsByClassName(
+        "banner"
+      )[0].style.backgroundImage = `url(${this.state.src})`;
+    }
+  }
   render() {
     return (
       <ThemeProvider theme={theme}>
@@ -184,8 +198,8 @@ class Homepage extends React.Component {
             className="banner"
             style={{
               width: "100%",
-              backgroundImage: `url(${Background})`,
               height: "600px",
+              backgroundColor: "rgb(0, 200, 238)",
               backgroundRepeat: "no-repeat",
               // backgroundAttachment: "fixed",
               backgroundSize: "cover",
@@ -270,6 +284,7 @@ class Homepage extends React.Component {
             </Tabs>
           </div>
         </div>
+        {this.renderImage()}
       </ThemeProvider>
     );
   }
