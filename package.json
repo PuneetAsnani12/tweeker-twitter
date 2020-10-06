@@ -1,0 +1,31 @@
+{
+  "name": "login-twitter-server",
+  "version": "1.0.0",
+  "engines": {
+    "node": "13.3.0",
+    "npm": "6.13.1"
+  },
+  "scripts": {
+    "client": "npm start --prefix ../",
+    "server": "nodemon server.js",
+    "build": "npm run build",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cors": "2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "express-sslify": "^1.2.0",
+    "login-with-twitter": "^1.2.3",
+    "twit": "^2.2.11"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.3"
+  }
+}
