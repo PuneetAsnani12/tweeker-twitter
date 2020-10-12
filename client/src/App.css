@@ -20,10 +20,16 @@ body {
   } */
   .header {
     justify-content: end !important;
-    padding-left:25px;
+    padding-left: 25px;
     transition: 1s;
   }
   .login-button {
     position: unset;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .username {
+    display: none;
   }
 }

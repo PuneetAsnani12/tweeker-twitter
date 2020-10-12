@@ -169,6 +169,7 @@ class Homepage extends React.Component {
               <Spinner></Spinner>
             ) : this.state.user ? (
               <div
+                className="username"
                 style={{
                   position: "absolute",
                   left: 30,
@@ -200,7 +201,7 @@ class Homepage extends React.Component {
               height: "40vw",
               minWidth:"500px",
               minHeight:"200px",
-              backgroundColor: "rgb(0, 200, 238)",
+              backgroundColor: "#4b92c3",
               backgroundRepeat: "no-repeat",
               // backgroundAttachment: "fixed",
               backgroundSize: "cover",
