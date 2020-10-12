@@ -104,10 +104,10 @@ app.get("/api/sign", (req, res) => {
     if (err) {
       console.log(err);
     }
-    
+
     // user.T = T;
     req.session.user = user;
-    // User = user; 
+    // User = user;
     // console.log(req.session);
     // res.send({user});
     res.redirect(redirect_URL);
@@ -161,16 +161,18 @@ app.get("/api/home_timeline", authCheck, (req, res) => {
               .replace("https://", "")
               .replace("www.", "")
               .split(/[./?#]/)[0];
-            if (!topDomains[domain]) {
-              topDomains[domain] = {
-                count: 1,
-                name: urlObject.expanded_url
-                  .replace("http://", "")
-                  .replace("https://", "")
-                  .split(/[/?#]/)[0],
-              };
-            } else {
-              topDomains[domain].count += 1;
+            if (domain !== "twitter") {
+              if (!topDomains[domain]) {
+                topDomains[domain] = {
+                  count: 1,
+                  name: urlObject.expanded_url
+                    .replace("http://", "")
+                    .replace("https://", "")
+                    .split(/[/?#]/)[0],
+                };
+              } else {
+                topDomains[domain].count += 1;
+              }
             }
           });
         }
