@@ -70,7 +70,7 @@ app.get("/service-worker.js", (req, res) => {
   res.sendFile(path.resolve(__dirname, "..", "build", "service-worker.js"));
 });
 
-let User = null;
+// let User = null;
 
 app.get("/api/auth", (req, res) => {
   if (req.session.user) {
@@ -104,18 +104,10 @@ app.get("/api/sign", (req, res) => {
     if (err) {
       console.log(err);
     }
-    let T = new Twit({
-      consumer_key: process.env.API_KEY,
-      consumer_secret: process.env.API_SECRET_KEY,
-      access_token: user.userToken,
-      access_token_secret: user.userTokenSecret,
-      timeout_ms: 60 * 1000, // optional HTTP request timeout to apply to all requests.
-      // strictSSL:            true,     // optional - requires SSL certificates to be valid.
-    });
-
-    user.T = T;
+    
+    // user.T = T;
     req.session.user = user;
-    User = user;
+    // User = user; 
     // console.log(req.session);
     // res.send({user});
     res.redirect(redirect_URL);
@@ -134,7 +126,15 @@ const authCheck = (req, res, next) => {
 };
 
 app.get("/api/home_timeline", authCheck, (req, res) => {
-  T = User.T;
+  let T = new Twit({
+    consumer_key: process.env.API_KEY,
+    consumer_secret: process.env.API_SECRET_KEY,
+    access_token: req.session.user.userToken,
+    access_token_secret: req.session.user.userTokenSecret,
+    timeout_ms: 60 * 1000, // optional HTTP request timeout to apply to all requests.
+    // strictSSL:            true,     // optional - requires SSL certificates to be valid.
+  });
+
   let Tweets = [];
   let topDomains = {};
   let mostShares = {};
