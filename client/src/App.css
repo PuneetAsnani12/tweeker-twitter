@@ -1,7 +1,29 @@
 body {
   margin: 0;
+  min-width: 500px;
 }
 
 * {
   box-sizing: border-box;
+}
+
+@media only screen and (max-width: 500px) {
+  .banner {
+    font-size: 25px !important;
+    padding-bottom: 20px !important;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  /* .login-button {
+    right: 2px !important;
+  } */
+  .header {
+    justify-content: end !important;
+    padding-left:25px;
+    transition: 1s;
+  }
+  .login-button {
+    position: unset;
+  }
 }

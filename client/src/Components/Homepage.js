@@ -140,9 +140,9 @@ class Homepage extends React.Component {
               alignItems: "center",
               width: "100%",
               height: "3.5rem",
-              backgroundColor: "#00acee",
+              backgroundColor: "#4b92c3",
               position: "relative",
-              boxShadow: "2px 2px 15px 1px #fff",
+              boxShadow: "2px 2px 105px 1px #fff",
               // boxShadow: "5px 10px 18px red",
               zIndex: 1,
               // backgroundColor: "red",
@@ -190,7 +190,6 @@ class Homepage extends React.Component {
                 >
                   Login with Twitter
                 </Button>
-                {/* <button onClick={this.handlelogin}>Login with Twitter</button> */}
               </div>
             )}
           </div>
@@ -198,19 +197,20 @@ class Homepage extends React.Component {
             className="banner"
             style={{
               width: "100%",
-              height: "600px",
+              height: "40vw",
+              minWidth:"500px",
+              minHeight:"200px",
               backgroundColor: "rgb(0, 200, 238)",
               backgroundRepeat: "no-repeat",
               // backgroundAttachment: "fixed",
               backgroundSize: "cover",
-              marginTop: "1px",
+              // marginTop: "1px",  
               zIndex: -1,
               color: "white",
-              fontSize: "5rem",
+              fontSize: "5vw",
               fontFamily: "sans-serif",
               fontWeight: "lighter",
-              paddingBottom: "80px",
-              paddingLeft: "20px",
+              paddingBottom: "4vw",
               alignItems: "flex-end",
               display: "flex",
               justifyContent: "center",
