@@ -138,6 +138,7 @@ app.get("/api/home_timeline", authCheck, (req, res) => {
   let Tweets = [];
   let topDomains = {};
   let mostShares = {};
+  let total = 0;
   // console.log(T);
   T.get("statuses/home_timeline", { count: 200 }, async function (
     err,
@@ -170,8 +171,10 @@ app.get("/api/home_timeline", authCheck, (req, res) => {
                     .replace("https://", "")
                     .split(/[/?#]/)[0],
                 };
+                total += 1;
               } else {
                 topDomains[domain].count += 1;
+                total += 1;
               }
             }
           });
@@ -179,7 +182,7 @@ app.get("/api/home_timeline", authCheck, (req, res) => {
       }
     });
 
-    res.send({ data: Tweets, topDomains, mostShares });
+    res.send({ data: Tweets, topDomains, mostShares,total });
   });
 });
 

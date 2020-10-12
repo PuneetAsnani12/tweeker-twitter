@@ -30,6 +30,7 @@ class Homepage extends React.Component {
     topdomains: {},
     mostShares: {},
     src: null,
+    totalCount: 0,
   };
 
   componentDidMount() {
@@ -46,6 +47,7 @@ class Homepage extends React.Component {
           .get("/api/home_timeline")
           .then((res) => {
             this.setState({ data: res.data.data });
+            this.setState({ totalCount: res.data.total });
             this.setState({ topdomains: res.data.topDomains });
             this.setState({ mostShares: res.data.mostShares });
           })
@@ -94,7 +96,7 @@ class Homepage extends React.Component {
           <Progress
             hasStripe
             isAnimated
-            value={Math.ceil((ele[1].count / this.state.data.length) * 100)}
+            value={Math.ceil((ele[1].count / this.state.totalCount) * 100)}
           />
         </Box>
       );
@@ -199,15 +201,14 @@ class Homepage extends React.Component {
             style={{
               width: "100%",
               height: "40vw",
-              minWidth:"500px",
-              minHeight:"200px",
+              minWidth: "500px",
+              minHeight: "200px",
               backgroundColor: "#4b92c3",
               backgroundRepeat: "no-repeat",
-              // backgroundAttachment: "fixed",
               backgroundSize: "cover",
-              // marginTop: "1px",  
               zIndex: -1,
               color: "white",
+              transition: "1s",
               fontSize: "5vw",
               fontFamily: "sans-serif",
               fontWeight: "lighter",
@@ -236,6 +237,7 @@ class Homepage extends React.Component {
               paddingRight: "50px",
               paddingLeft: "50px",
               paddingTop: "20px",
+              paddingBottom: "50px",
             }}
           >
             <Tabs
@@ -251,7 +253,6 @@ class Homepage extends React.Component {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  {/* <p>one!</p> */}
                   <Stack spacing={8}>
                     {this.state.data.length > 0 ? (
                       this.renderTweets()
@@ -261,9 +262,7 @@ class Homepage extends React.Component {
                   </Stack>
                 </TabPanel>
                 <TabPanel>
-                  {/* <p>two!</p> */}
                   <Stack spacing={8}>
-                    {/* {console.log(this.state.topdomains)} */}
                     {JSON.stringify(this.state.topdomains) !== "{}" ? (
                       this.renderdomains()
                     ) : this.state.user ? (
@@ -272,7 +271,6 @@ class Homepage extends React.Component {
                   </Stack>
                 </TabPanel>
                 <TabPanel>
-                  {/* <p>three!</p> */}
                   <Stack spacing={8}>
                     {JSON.stringify(this.state.mostShares) !== "{}" ? (
                       this.renderSharers()
