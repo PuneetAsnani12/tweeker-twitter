@@ -227,7 +227,7 @@ class Homepage extends React.Component {
                 hideWhenDone: false,
               }}
             >
-              See {"&"} Analyze Your Tweets
+              Analyze Your Twitter Timeline
             </Typist>
           </div>
           <div
